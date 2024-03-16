@@ -1,4 +1,4 @@
-package io.security.basicsecurity;
+package io.security.basicsecurity.controller;
 
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,4 +11,6 @@ public class SecurityController {
     public String index(){
         return "home";
     }
+
+
 }
