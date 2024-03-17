@@ -97,3 +97,5 @@ protected void configure(HttpSecurity http) throws Exception {
 <img src="img_3.png" height="600px" width="100%">
 
 
+#### 05 - LogOut
+<img src="img_4.png" height="500px" width="80%">
