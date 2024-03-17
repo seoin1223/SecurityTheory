@@ -99,3 +99,14 @@ protected void configure(HttpSecurity http) throws Exception {
 
 #### 05 - LogOut
 <img src="img_4.png" height="500px" width="80%">
+
+
+
+- logout API
+
+    <img src="img_5.png" height="500px" width="80%">
+
+- logout Filter
+
+    <img src="img_6.png" height="500px" width="80%">
+
