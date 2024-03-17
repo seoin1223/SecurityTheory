@@ -110,3 +110,15 @@ protected void configure(HttpSecurity http) throws Exception {
 
     <img src="img_6.png" height="500px" width="80%">
 
+<br>
+&nbsp;
+
+
+#### 06 - Remember Me 인증
+<img src="img_7.png" height="300px" width="80%">
+
+- Remember me API
+  <img src="img_8.png" height="300px" width="80%">
+    
+
+
