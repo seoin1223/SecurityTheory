@@ -118,6 +118,7 @@ protected void configure(HttpSecurity http) throws Exception {
 <img src="img_7.png" height="300px" width="80%">
 
 - Remember me API
+
   <img src="img_8.png" height="300px" width="80%">
     
 
