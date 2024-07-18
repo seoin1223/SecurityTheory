@@ -37,59 +37,53 @@ public class  SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
 
-                .authorizeHttpRequests(authorize ->
-                        authorize
-                                .anyRequest().authenticated()
+                .authorizeHttpRequests(authorize ->authorize.anyRequest().authenticated())
+                .formLogin(form -> form
+//                                  .loginPage("/login")
+                                    .defaultSuccessUrl("/")
+                                    .failureUrl("/login")
+                                    .usernameParameter("uid")
+                                    .passwordParameter("pwd")
+                                    .loginProcessingUrl("/login_proc")
+                                    .successHandler(new AuthenticationSuccessHandler() {
+                                        @Override
+                                        public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                                            System.out.println("authentication "+ authentication.getName());
+                                            response.sendRedirect("/");
+                                        }
+                                    })
+                                    .failureHandler(new AuthenticationFailureHandler() {
+                                        @Override
+                                        public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+                                            System.out.println("exception"+ exception.getMessage());
+                                            response.sendRedirect("/login");
+                                        }
+                                    })
+                                    .permitAll()
                 )
-                .formLogin(form ->
-                        form
-//                                .loginPage("/login")
-                                .defaultSuccessUrl("/")
-                                .failureUrl("/login")
-                                .usernameParameter("uid")
-                                .passwordParameter("pwd")
-                                .loginProcessingUrl("/login_proc")
-                                .successHandler(new AuthenticationSuccessHandler() {
-                                    @Override
-                                    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                        System.out.println("authentication "+ authentication.getName());
-                                        response.sendRedirect("/");
-                                    }
-                                })
-                                .failureHandler(new AuthenticationFailureHandler() {
-                                    @Override
-                                    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-                                        System.out.println("exception"+ exception.getMessage());
-                                        response.sendRedirect("/login");
-                                    }
-                                })
-                                .permitAll()
+                .logout(logout -> logout
+                                    .logoutUrl("/logout")
+                                    .logoutSuccessUrl("/login")
+                                    .addLogoutHandler(new LogoutHandler() {
+                                        @Override
+                                        public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+                                            HttpSession session = request.getSession();
+                                            session.invalidate();
+                                        }
+                                    })
+                                    .logoutSuccessHandler(new LogoutSuccessHandler() {
+                                        @Override
+                                        public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                                            response.sendRedirect("/login");
+                                        }
+                                    })
+                                    .deleteCookies("remeber-me")
                 )
-                .logout(logout ->
-                        logout
-                                .logoutUrl("/logout")
-                                .logoutSuccessUrl("/login")
-                                .addLogoutHandler(new LogoutHandler() {
-                                    @Override
-                                    public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-                                        HttpSession session = request.getSession();
-                                        session.invalidate();
-                                    }
-                                })
-                                .logoutSuccessHandler(new LogoutSuccessHandler() {
-                                    @Override
-                                    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                                        response.sendRedirect("/login");
-                                    }
-                                })
-                                .deleteCookies("remeber-me")
-                )
-                .rememberMe( me ->
-                        me
-                                .rememberMeParameter("remember") // 기본 파라미터명은 remember-me인데 remember로 변경
-                                .tokenValiditySeconds(3600) // 1시간으로 변경 -> default 는 14일
-                                .alwaysRemember(false) // ture면 기능이 활성화되지 않아도 항상 실행 -> 기본 false
-                                .userDetailsService(userDetailsService)// 계정을 조회하는 class
+                .rememberMe( me -> me
+                                    .rememberMeParameter("remember") // 기본 파라미터명은 remember-me인데 remember로 변경
+                                    .tokenValiditySeconds(3600) // 1시간으로 변경 -> default 는 14일
+                                    .alwaysRemember(false) // ture면 기능이 활성화되지 않아도 항상 실행 -> 기본 false
+                                    .userDetailsService(userDetailsService)// 계정을 조회하는 class
                 )
 
 

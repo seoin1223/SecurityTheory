@@ -5,7 +5,7 @@
 2. [인증 API](#2-인증-api)
 
 <br>
-&nbsp
+&nbsp-
 
 ## 1. 보안 정책 설정
 #### 1. 자원 및 권한 설정
@@ -115,11 +115,23 @@ protected void configure(HttpSecurity http) throws Exception {
 
 
 #### 06 - Remember Me 인증
-<img src="img_7.png" height="300px" width="80%">
+
+- Remember Me?
+
+  <img src="img_7.png" height="300px" width="80%">
+<br>
 
 - Remember me API
 
   <img src="img_8.png" height="300px" width="80%">
+<br>
+
+- Remeber Me 인증
+
+  <img src="img_9.png" height="300px" width="80%">  
+<br>
+
+1. RememberMeAuthenticationFilter 동작
+   - Authentication이 null일 경우 (null이 아니면 동작하지 않음)     
+   - RememberMe Cookie를 가져오는 경우
     
-
-
